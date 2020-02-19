@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: Install openshit packages
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - subscription-manager
+
+  - name: upgrade all packages
+    yum:
+     name: '*'
+     state: latest

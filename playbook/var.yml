@@ -1,0 +1,8 @@
+
+sudo: yes
+docker_disk: /dev/sdb
+docker_storage: /var/lib/docker
+#RedHat Subscription
+redhat_username: <redhat register user name>
+redhat_password: <password of the user name>
+redhat_pool_ids:<pool id>

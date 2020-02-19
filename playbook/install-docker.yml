@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+ 
+  tasks:
+  - name: Install docker
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - docker-1.13.1
+

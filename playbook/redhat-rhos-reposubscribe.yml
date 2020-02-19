@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+ 
+  tasks:
+
+  - name: Disable all RHSM repositories
+    rhsm_repository:
+        name: '*'
+        state: disabled
+
+  - name: Enable the repositories
+    rhsm_repository: 
+        name: rhel-7-server-rpms,rhel-7-server-extras-rpms,rhel-7-server-ose-3.11-rpms,rhel-7-server-ansible-2.6-rpms
+        state: enabled 
