@@ -69,6 +69,8 @@ https://techbloc.net/archives/3681
 
 3 Go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then copy it to bastion node, and run it.
 
+     bash -x register-repo.sh
+
 3 In bastion node, run following commands to install ansible and openshift-ansible:
 
       sudo yum -y install python-pip
@@ -82,7 +84,7 @@ https://techbloc.net/archives/3681
       
 5 Copy "ssh-copy-id.sh" to bastion node and run it to copy public key to all the other nodes:
 
-      ./ssh-copy-id.sh 
+      bash -x ssh-copy-id.sh 
       
 
 ## Create Inventory file.
