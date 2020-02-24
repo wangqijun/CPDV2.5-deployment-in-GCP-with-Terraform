@@ -127,7 +127,7 @@ https://techbloc.net/archives/3681
 ## Create Inventory file.
 
 
-   Inventory file template with NFS and Crio enabled:
+  Inventory file template with NFS and Crio enabled(Portworx required):
    ```
 # define openshift components
 [OSEv3:children]
@@ -211,7 +211,7 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
       
 ```
   
-Invertory file with NFS and Crio disabled
+Invertory file with NFS and Crio disabled:
 
 ```
 # define openshift components
