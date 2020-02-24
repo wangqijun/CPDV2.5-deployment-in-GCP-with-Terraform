@@ -63,11 +63,11 @@ https://techbloc.net/archives/3681
 
 ## Configure VMs
 
-1 Go to "scripts" folder.
+1 Copy the "scripts" folder to bastion node.
 
 2 Copy the contents of "user-setup.sh" and run it in each node of the cluster.
 
-3 Go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then copy it to bastion node, and run it.
+3 Go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then run it.
 
      bash -x register-repo.sh
 
@@ -82,7 +82,7 @@ https://techbloc.net/archives/3681
 
        echo "" | ssh-keygen -t rsa -N ""
       
-5 Copy "ssh-copy-id.sh" to bastion node and run it to copy public key to all the other nodes:
+5 Go to 'Scripts' folder and run "ssh-copy-id.sh" to copy public key to all the other nodes:
 
       bash -x ssh-copy-id.sh 
       
@@ -299,45 +299,53 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
 ## Prepare for OCP installation.
 
    
-   1 Copy the "playbook" folder to bastion node.
+   1 Copy the "playbook" folder to bastion node and go to the "playbook" folder.
 
    2 Install subscription-manager in each node:
    
-      ansible-playbook -i ../openshift_inventory install-subscription-manager.yml 
+      ansible-playbook -i ../inventory-nfs-crio install-subscription-manager.yml 
 
    3 Register each node with Redhat account. Make sure you have Redhat subscription account before this step:
 
-      ansible-playbook -i ../openshift_inventory redhat-register-machines.yml
+      ansible-playbook -i ../inventory-nfs-crioredhat-register-machines.yml
 
    4 Redhat repo set up:
 
-      ansible-playbook -i ../openshift_inventory redhat-rhos-reposubscribe.yml
+      ansible-playbook -i ../inventory-nfs-crioredhat-rhos-reposubscribe.yml
 
    5 Install basic package for OCP:
    
-      ansible-playbook -i ../openshift_inventory install-base-package.yml
+      ansible-playbook -i ../inventory-nfs-crioinstall-base-package.yml
 
    6 Install openshift-ansible in each node:
 
-     ansible-playbook -i ../openshift_inventory install-ansible.yml 
+     ansible-playbook -i ../inventory-nfs-crio install-ansible.yml 
 
    7 Install docker in each node:
 
-      ansible-playbook -i ../openshift_inventory install-docker.yml
+      ansible-playbook -i ../inventory-nfs-crio install-docker.yml
      
    8 Configure docker storage in each node:  
 
-      ansible-playbook -i ../openshift_inventory docker_storage.yml
+      ansible-playbook -i ../inventory-nfs-crio docker_storage.yml
+      
+   9 Check the statue of clock syncronization in each node by:
+   
+      ansible-playbook -i ../inventory-nfs-crio check-clock.yaml
+      
+   10 Check the status of Network Manager by:
+   
+      ansible-playbook -i ../inventory-nfs-crio check-NetworkManager.yaml
       
  ## Prerequisites check and kick off the deployment. 
  
    1 Run "prerequisites.yml" to check each node and install required package if needed.
 
-     ansible-playbook -i ../openshift_inventory /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+     ansible-playbook -i ../inventory-nfs-crio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
      
    2 Run "deploy-cluster.yml" to kick off the installation.
    
-     ansible-playbook -i ../openshift_inventory /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml 
+     ansible-playbook -i ../inventory-nfs-crio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml 
        
  ## Deployment result.
  
