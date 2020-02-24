@@ -3,7 +3,7 @@ resource "google_compute_address" "infra" {
 }
 resource "google_compute_target_pool" "infra" {
   name = "infra-target-pool"
-  instances = "${google_compute_instance.infra.*.self_link}"
+  instances = "${google_compute_instance.master.*.self_link}"
   health_checks = ["${google_compute_http_health_check.infra.name}"]
 }
 resource "google_compute_forwarding_rule" "http-infra" {
