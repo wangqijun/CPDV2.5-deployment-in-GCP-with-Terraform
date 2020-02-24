@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+   - name: report the state of the Network Manager
+     shell:  systemctl status NetworkManager
+     register: output
+   - debug: var=output.stdout_lines

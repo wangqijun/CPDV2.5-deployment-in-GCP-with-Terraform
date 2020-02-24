@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+   - name: report the synchronisation state of the NTP daemon
+     shell: ntpstat
+     register: output
+   - debug: var=output.stdout_lines
