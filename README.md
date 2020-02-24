@@ -86,6 +86,43 @@ https://techbloc.net/archives/3681
 
       bash -x ssh-copy-id.sh 
       
+      
+## Set up NFS service in NFS node
+
+
+ 1 Copy disk.sh from scripts folder to bastion node and then copy it from bastion node to nfs node.
+ 
+ 2 Run the disk.sh to create a new nfs mount path from the raw disk:
+ 
+     sudo bash -x ./disk.sh /dev/sdb /nfs
+     
+ 3 Install and configure NFS service:
+ 
+ 
+    sudo yum install -y nfs-utils
+    sudo systemctl enable rpcbind
+    sudo systemctl enable nfs-server
+    sudo systemctl start rpcbind
+    sudo systemctl start nfs-server
+    sudo chmod -R 755 /nfs
+    sudo firewall-cmd --permanent --zone=public --add-service=nfs
+    sudo firewall-cmd --permanent --add-service=rpc-bind
+
+  4 Configure NFS experts file.
+  
+     sudo vi /etc/exports
+     
+
+     /nfs *(rw,sync,no_root_squash)
+     
+     
+
+     sudo systemctl restart nfs-server
+     
+   5 Verify NFS service works well.
+
+ 
+     showmount -e nfs01
 
 ## Create Inventory file.
 
@@ -94,6 +131,8 @@ https://techbloc.net/archives/3681
    
       "oreg_auth_user"
       "oreg_auth_password"
+      
+      
    
 ## Prepare for OCP installation.
 
