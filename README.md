@@ -65,9 +65,9 @@ https://techbloc.net/archives/3681
 
 1 Go to "scripts" folder.
 
-2 Copy the contents of "user-setup.sh" and run it in each node of the cluster (This step will be put in terraform automation steps shortly).
+2 Copy the contents of "user-setup.sh" and run it in each node of the cluster.
 
-3 Copy file "register-repo.sh" to bastion node and run it.
+3 Go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then copy it to bastion node, and run it.
 
 3 In bastion node, run following commands to install ansible and openshift-ansible:
 
