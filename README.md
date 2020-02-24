@@ -78,6 +78,11 @@ https://techbloc.net/archives/3681
       sudo pip install --upgrade setuptools
       sudo yum -y install openshift-ansible
       
+  Check ansible version to make sure it's 2.6.5:
+  
+      sudo ansible --version
+      
+      
 4 Generate key files in bastion node.
 
        echo "" | ssh-keygen -t rsa -N ""
