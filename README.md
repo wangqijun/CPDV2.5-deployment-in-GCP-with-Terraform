@@ -461,6 +461,7 @@ round-trip min/avg/max/stddev = 38.261/41.210/42.819/2.088 ms
      
    4 Login to OCP from terminal:
    
-     oc login -u system:admin
-     oc get no
-     oc get po --all-namespaces
+     sudo oc login -u system:admin
+     sudo oc adm policy add-cluster-role-to-user cluster-admin ocadmin
+     sudo oc get no
+     sudo oc get po --all-namespaces
