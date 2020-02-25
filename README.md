@@ -73,8 +73,20 @@ https://techbloc.net/archives/3681
 3 Ssh login to the bastion node and then go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then run it.
 
      bash -x register-repo.sh
+     
+4 Run following command to make sure you only have the four required repos:
 
-3 In bastion node, run following commands to install ansible and openshift-ansible:
+    [ocp@bastion scripts]$ yum repolist
+    Loaded plugins: product-id, search-disabled-repos, subscription-manager
+    repo id                                                         repo name                                                                                            status
+    rhel-7-server-ansible-2.6-rpms/x86_64                           Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server                                25
+    rhel-7-server-extras-rpms/x86_64                                Red Hat Enterprise Linux 7 Server - Extras (RPMs)                                                 1,229
+    rhel-7-server-ose-3.11-rpms/x86_64                              Red Hat OpenShift Container Platform 3.11 (RPMs)                                                    929
+    rhel-7-server-rpms/7Server/x86_64                               Red Hat Enterprise Linux 7 Server (RPMs)                                                         27,011
+    repolist: 29,194
+
+
+5 In bastion node, run following commands to install ansible and openshift-ansible:
 
       sudo yum -y install python-pip
       sudo pip install ansible==2.6.5
@@ -86,11 +98,11 @@ https://techbloc.net/archives/3681
       sudo ansible --version
       
       
-4 Generate key files in bastion node.
+6 Generate key files in bastion node.
 
        echo "" | ssh-keygen -t rsa -N ""
       
-5 Go to 'Scripts' folder and run "ssh-copy-id.sh" to copy public key to all the other nodes:
+7 Go to 'Scripts' folder and run "ssh-copy-id.sh" to copy public key to all the other nodes:
 
       bash -x ssh-copy-id.sh 
       
