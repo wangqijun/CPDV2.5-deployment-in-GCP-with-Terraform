@@ -353,32 +353,40 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
    3 Register each node with Redhat account. Make sure you have Redhat subscription account before this step:
 
       ansible-playbook -i ../inventory-nfs-crio redhat-register-machines.yml
-
-   4 Redhat repo set up:
-
-      ansible-playbook -i ../inventory-nfs-crioredhat-rhos-reposubscribe.yml
-
-   5 Install basic package for OCP:
+      
+   4 Disable all the google cloud repos:
    
-      ansible-playbook -i ../inventory-nfs-crioinstall-base-package.yml
+      ansible-playbook -i ../inventory-nfs-crio disable-repo.yaml
 
-   6 Install openshift-ansible in each node:
+   5 Redhat repo set up:
+
+     ansible-playbook -i ../inventory-nfs-crio redhat-rhos-reposubscribe.yml
+      
+   6 Check the status of yum repolist and make sure in each node, only four required repos are enabled:
+   
+     ansible-playbook -i ../inventory-nfs-crio check-repolist.yaml
+
+   7 Install basic package for OCP:
+   
+      ansible-playbook -i ../inventory-nfs-crio install-base-package.yml
+
+   8 Install openshift-ansible in each node:
 
      ansible-playbook -i ../inventory-nfs-crio install-ansible.yml 
 
-   7 Install docker in each node:
+   9 Install docker in each node:
 
       ansible-playbook -i ../inventory-nfs-crio install-docker.yml
      
-   8 Configure docker storage in each node:  
+   10 Configure docker storage in each node:  
 
       ansible-playbook -i ../inventory-nfs-crio docker_storage.yml
       
-   9 Check the statue of clock syncronization in each node by:
+   11 Check the statue of clock syncronization in each node by:
    
       ansible-playbook -i ../inventory-nfs-crio check-clock.yaml
       
-   10 Check the status of Network Manager by:
+   12 Check the status of Network Manager by:
    
       ansible-playbook -i ../inventory-nfs-crio check-NetworkManager.yaml
       
