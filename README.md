@@ -107,11 +107,11 @@ https://techbloc.net/archives/3681
 ## Set up NFS service in NFS node
 
 
- 1 Copy disk.sh from scripts folder to bastion node and then copy it from bastion node to nfs node.
+ 1 Copy disk.sh in scripts folder from bastion node and to nfs node.
  
  2 Run the disk.sh to create a new nfs mount path from the raw disk:
  
-     sudo bash -x ./disk.sh /dev/sdb /nfs
+     sudo bash -x ./disk.sh /dev/sdc /nfs
      
  3 Install and configure NFS service:
  
