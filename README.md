@@ -62,12 +62,15 @@ https://techbloc.net/archives/3681
 8 Run "terraform apply"
 
 ## Configure VMs
+ 
 
-1 Copy the "scripts" folder to bastion node.
+1 Copy the contents of "user-setup.sh" in folder 'scripts' and run it in each node of the cluster (this shell script will create a new user call "ocp" and set password of it, and it also configure the OS to accept ssh login by username and password).
 
-2 Copy the contents of "user-setup.sh" and run it in each node of the cluster.
+2 Copy the "scripts" folder to bastion node by:
 
-3 Go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then run it.
+    scp -r ./scripts ocp@<bastion node public ip>:/
+
+3 Ssh login to the bastion node and then go to 'Scripts' folder and modify "username", "password", and "pool id" in file "register-repo.sh" and then run it.
 
      bash -x register-repo.sh
 
