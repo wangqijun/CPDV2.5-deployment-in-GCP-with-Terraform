@@ -149,23 +149,23 @@ https://techbloc.net/archives/3681
     
    2 Make sure you have two load balancers created by terraform:
    
-   ![Network Service](./img/load-balancing.jpg?raw=true)
+   ![load balancer](./img/load-balancing.jpg?raw=true)
    
    3 Check the public IP address of the master target pool:
     
-   ![Network Service](./img/master-target-pool.jpg?raw=true)
+   ![master target pool](./img/master-target-pool.jpg?raw=true)
    
    4 Check the public IP address of the infra target pool:
     
-   ![Network Service](./img/master-infra-pool.jpg?raw=true)
+   ![infra target pool](./img/infra-target-pool.jpg?raw=true)
    
    5 Set DNS forwarding for master-target-pool in Domain service provider:
    
-   ![Network Service](./img/domain-example-master.jpg?raw=true)
+   ![DNS for master target pool](./img/domain-example-master.jpg?raw=true)
    
    6 Set DNS forwarding for infra-target-pool in Domain service provider:
    
-   ![Network Service](./img/domain-example.jpg?raw=true)
+   ![DNS for infra target pool](./img/domain-example.jpg?raw=true)
    
   
 
@@ -180,7 +180,7 @@ masters
 nodes
 nfs
 etcd
-lb
+
 
 # define openshift variables
 [OSEv3:vars]
@@ -265,7 +265,7 @@ masters
 nodes
 nfs
 etcd
-lb
+
 
 # define openshift variables
 [OSEv3:vars]
