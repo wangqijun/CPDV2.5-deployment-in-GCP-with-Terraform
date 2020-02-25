@@ -64,7 +64,7 @@ https://techbloc.net/archives/3681
 ## Configure VMs
  
 
-1 Copy the contents of "user-setup.sh" in folder 'scripts' and run it in each node of the cluster (this shell script will create a new user call "ocp" and set password of it, and it also configure the OS to accept ssh login by username and password).
+1 Copy the contents of "user-setup.sh" in folder 'scripts' and modify the username and password in the file, and run it in each node of the cluster (this shell script will create a new user call "ocp" and set password of it, and it also configure the OS to accept ssh login by username and password).
 
 2 Copy the "scripts" folder to bastion node by:
 
