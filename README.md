@@ -344,7 +344,7 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
 ## Prepare for OCP installation.
 
    
-   1 Copy the "playbook" folder to bastion node and go to the "playbook" folder.
+   1 Copy the "playbook" folder to bastion node and go to the "playbook" folder, and modify the variable definition file var.yml, where you need to set your own "redhat_username", "redhat_password" and "redhat_pool_ids".
 
    2 Install subscription-manager in each node:
    
@@ -352,7 +352,7 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
 
    3 Register each node with Redhat account. Make sure you have Redhat subscription account before this step:
 
-      ansible-playbook -i ../inventory-nfs-crioredhat-register-machines.yml
+      ansible-playbook -i ../inventory-nfs-crio redhat-register-machines.yml
 
    4 Redhat repo set up:
 
