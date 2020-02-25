@@ -88,12 +88,9 @@ https://techbloc.net/archives/3681
 
 5 In bastion node, run following commands to install ansible and openshift-ansible:
 
-      sudo yum -y install python-pip
-      sudo pip install ansible==2.6.5
-      sudo pip install --upgrade setuptools
       sudo yum -y install openshift-ansible
       
-  Check ansible version to make sure it's 2.6.5:
+  Check ansible version to make sure it's 2.6.X:
   
       sudo ansible --version
       
