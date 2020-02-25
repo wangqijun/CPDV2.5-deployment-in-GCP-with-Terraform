@@ -407,7 +407,7 @@ PING ocp-gcp.ibmcpdswat.com (35.185.32.18): 56 data bytes
 round-trip min/avg/max/stddev = 37.903/41.349/43.241/2.440 ms
 qijuns-mbp:ocp qijunwang$ 
 qijuns-mbp:ocp qijunwang$ 
-qijuns-mbp:ocp qijunwang$ ping *.apps.ocp-gcp.ibmcpdswat.com
+qijuns-mbp:ocp qijunwang$ ping console.apps.ocp-gcp.ibmcpdswat.com
 PING *.apps.ocp-gcp.ibmcpdswat.com (35.231.55.221): 56 data bytes
 64 bytes from 35.231.55.221: icmp_seq=0 ttl=42 time=38.261 ms
 64 bytes from 35.231.55.221: icmp_seq=1 ttl=42 time=42.550 ms
