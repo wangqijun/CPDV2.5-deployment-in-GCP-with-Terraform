@@ -392,11 +392,38 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
       
  ## Prerequisites check and kick off the deployment. 
  
-   1 Run "prerequisites.yml" to check each node and install required package if needed.
+   1 Before you run the redhat openshift playbooks, make sure the two DNS names you set up previously are working. You can simply validate it by ping:
+   
+   ```
+   
+     qijuns-mbp:ocp qijunwang$ ping ocp-gcp.ibmcpdswat.com 
+PING ocp-gcp.ibmcpdswat.com (35.185.32.18): 56 data bytes
+64 bytes from 35.185.32.18: icmp_seq=0 ttl=40 time=37.903 ms
+64 bytes from 35.185.32.18: icmp_seq=1 ttl=40 time=43.241 ms
+64 bytes from 35.185.32.18: icmp_seq=2 ttl=40 time=42.902 ms
+^C
+--- ocp-gcp.ibmcpdswat.com ping statistics ---
+3 packets transmitted, 3 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 37.903/41.349/43.241/2.440 ms
+qijuns-mbp:ocp qijunwang$ 
+qijuns-mbp:ocp qijunwang$ 
+qijuns-mbp:ocp qijunwang$ ping *.apps.ocp-gcp.ibmcpdswat.com
+PING *.apps.ocp-gcp.ibmcpdswat.com (35.231.55.221): 56 data bytes
+64 bytes from 35.231.55.221: icmp_seq=0 ttl=42 time=38.261 ms
+64 bytes from 35.231.55.221: icmp_seq=1 ttl=42 time=42.550 ms
+64 bytes from 35.231.55.221: icmp_seq=2 ttl=42 time=42.819 ms
+^C
+--- *.apps.ocp-gcp.ibmcpdswat.com ping statistics ---
+4 packets transmitted, 3 packets received, 25.0% packet loss
+round-trip min/avg/max/stddev = 38.261/41.210/42.819/2.088 ms
+   ```
+       
+ 
+   2 Run "prerequisites.yml" to check each node and install required package if needed.
 
      ansible-playbook -i ../inventory-nfs-crio /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
      
-   2 Run "deploy-cluster.yml" to kick off the installation.
+   3 Run "deploy-cluster.yml" to kick off the installation.
    
      ansible-playbook -i ../inventory-nfs-crio /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml 
        
