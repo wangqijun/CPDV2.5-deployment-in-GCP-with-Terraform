@@ -455,11 +455,11 @@ round-trip min/avg/max/stddev = 38.261/41.210/42.819/2.088 ms
  
    1 Access the the OCP web console, for example: "https://ocp-gcp.ibmcpdswat.com:8443" with user name "ocadmin".
    
-     ![OCP web console](./img/webconsole.jpg?raw=true)
+    ![OCP web console](./img/webconsole.jpg?raw=true)
  
    2 Install "oc" client tool in bastion node:
    
-    Go to Openshift web console and then choose "help" -> "command line tool" -> "Download oc", and then copy the "oc-3.11.146-linux.tar.gz" to bastion node and untar it, and then mv the "oc" file to /usr/bin.
+   Go to Openshift web console and then choose "help" -> "command line tool" -> "Download oc", and then copy the "oc-3.11.146-linux.tar.gz" to bastion node and untar it, and then mv the "oc" file to /usr/bin.
           
    3 Login to OCP from terminal and grant ocadmin cluster administration role:
    
