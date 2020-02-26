@@ -98,10 +98,11 @@ https://techbloc.net/archives/3681
 6 Generate key files in bastion node.
 
        echo "" | ssh-keygen -t rsa -N ""
+       cat id_rsa.pub > authorized_keys
       
-7 Go to 'Scripts' folder and run "ssh-copy-id.sh" to copy public key to all the other nodes:
+7 Go to 'Scripts' folder and run "ssh-copy.sh" to copy public key to all the other nodes:
 
-      bash -x ssh-copy-id.sh 
+      bash -x ssh-copy.sh 
       
       
 ## Set up NFS service in NFS node
