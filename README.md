@@ -455,7 +455,7 @@ round-trip min/avg/max/stddev = 38.261/41.210/42.819/2.088 ms
  
    1 Access the the OCP web console, for example: "https://ocp-gcp.ibmcpdswat.com:8443" with user name "ocadmin".
    
-    ![OCP web console](./img/webconsole.jpg?raw=true)
+   ![OCP web console](./img/webconsole.jpg?raw=true)
  
    2 Install "oc" client tool in bastion node:
    
