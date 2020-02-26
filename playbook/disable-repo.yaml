@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+   - name: disable google-cloud.repo
+     shell: sudo sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/google-cloud.repo
+   - name: disable rh-cloud.repo 
+     shell: sudo sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/rh-cloud.repo
+   - name: diable epel.repo
+     shell: sudo sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
