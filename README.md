@@ -246,9 +246,9 @@ master03.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.0.4
 master01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.0.2 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
 master02.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.0.5 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
 master03.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.0.4 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
-worker01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.5 openshift_schedulable=true openshift_node_group_name='node-config-compute'
-worker02.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.2 openshift_schedulable=true openshift_node_group_name='node-config-compute'
-worker03.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.4 openshift_schedulable=true openshift_node_group_name='node-config-compute'
+worker01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.5 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
+worker02.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.2 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
+worker03.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.4 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
 
 
 # nfs server
