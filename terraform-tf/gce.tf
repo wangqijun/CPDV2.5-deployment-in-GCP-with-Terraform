@@ -1,4 +1,4 @@
-resource "google_compute_disk" "worker_docker" {
+/* resource "google_compute_disk" "worker_docker" {
   count        = "${var.worker["count"]}"
   name         = "${format("worker%02d-dockervol", count.index + 1) }"
   type         = "pd-ssd"
@@ -7,7 +7,7 @@ resource "google_compute_disk" "worker_docker" {
       owner =  "qijun"     
     }
   zone         = "${var.gcp_zone}"
-}
+}*/
 resource "google_compute_disk" "nfs_disk" {
   count        = "${var.nfs["count"]}"
   name         = "${format("nfs%02d-disk", count.index + 1) }"
@@ -18,6 +18,19 @@ resource "google_compute_disk" "nfs_disk" {
     }
   zone         = "${var.gcp_zone}"
 }
+/*
+resource "google_compute_disk" "nfs_docker" {
+  count        = "${var.nfs["count"]}"
+  name         = "${format("nfs%02d-dockervol", count.index + 1) }"
+  type         = "pd-ssd"
+  size         = 200
+  labels = {
+      owner =  "qijun"
+    }
+  zone         = "${var.gcp_zone}"
+}
+*/
+/*
 resource "google_compute_disk" "master_docker" {
   count        = "${var.master["count"]}"
   name         = "${format("master%02d-dockervol", count.index + 1) }"
@@ -28,6 +41,8 @@ resource "google_compute_disk" "master_docker" {
     }
   zone         = "${var.gcp_zone}"
 }
+*/
+/*
 resource "google_compute_disk" "infra_docker" {
   count        = "${var.infra["count"]}"
   name         = "${format("infra%02d-dockervol", count.index + 1) }"
@@ -38,11 +53,12 @@ resource "google_compute_disk" "infra_docker" {
     }
   zone         = "${var.gcp_zone}"
 }
-resource "google_compute_disk" "master_glusterfs" {
+*/
+resource "google_compute_disk" "worker_portworx" {
   count        = "${var.master["count"]}"
   name         = "${format("master%02d-glusterfs", count.index + 1) }"
   type         = "pd-ssd"
-  size         = 200
+  size         = 700
   labels = {
       owner =  "qijun"
     }
@@ -67,15 +83,15 @@ resource "google_compute_instance" "bastion" {
   }
 
   network_interface {
-    subnetwork = "${google_compute_subnetwork.public.name}"
+    subnetwork = "${google_compute_subnetwork.vpc-public.name}"
     access_config {
         # Ephemeral
     }
   }
-  metadata_startup_script = "${data.template_file.sysprep-bastion.rendered}"
-  metadata = {
-    sshKeys = "centos:${file(var.bastion_key_path)}"
-  }
+  #metadata_startup_script = "${data.template_file.sysprep-bastion.rendered}"
+  #metadata = {
+  #  sshKeys = "centos:${file(var.bastion_key_path)}"
+  #}
 }
 
 resource "google_compute_instance" "nfs" {
@@ -98,7 +114,7 @@ resource "google_compute_instance" "nfs" {
     source = "${element(google_compute_disk.nfs_disk.*.self_link, count.index)}"
   }
   network_interface {
-    subnetwork = "${google_compute_subnetwork.private.name}"
+    subnetwork = "${google_compute_subnetwork.vpc-private.name}"
   }
   metadata = {
     sshKeys = "centos:${file(var.bastion_key_path)}"
@@ -120,17 +136,11 @@ resource "google_compute_instance" "master" {
       size = "${var.master["disk_size"]}"
     }
   }
-  attached_disk {
-    source = "${element(google_compute_disk.master_docker.*.self_link, count.index)}"
-  }
-  attached_disk {
-    source = "${element(google_compute_disk.master_glusterfs.*.self_link, count.index)}"
-  }
   network_interface {
-    subnetwork = "${google_compute_subnetwork.public.name}"
-    access_config {
-        # Ephemeral
-    }
+    subnetwork = "${google_compute_subnetwork.vpc-private.name}"
+    #access_config {
+    #    # Ephemeral
+    #}
   }
   metadata = {
     sshKeys = "centos:${file(var.bastion_key_path)}"
@@ -149,6 +159,7 @@ resource "google_compute_instance" "master" {
   }*/
 
 }
+/*
 resource "google_compute_instance" "infra" {
   count = "${var.infra["count"]}"
   name = "${format("infra%02d", count.index + 1) }"
@@ -169,12 +180,13 @@ resource "google_compute_instance" "infra" {
     source = "${element(google_compute_disk.infra_docker.*.self_link, count.index)}"
   }
   network_interface {
-    subnetwork = "${google_compute_subnetwork.private.name}"
+    subnetwork = "${google_compute_subnetwork.vpc-private.name}"
   }
   metadata =  {
     sshKeys = "centos:${file(var.bastion_key_path)}"
   }
 }
+*/
 resource "google_compute_instance" "worker" {
   count = "${var.worker["count"]}"
   name = "${format("worker%02d", count.index + 1) }"
@@ -192,12 +204,12 @@ resource "google_compute_instance" "worker" {
     }
   }
   attached_disk {
-    source = "${element(google_compute_disk.worker_docker.*.self_link, count.index)}"
+    source = "${element(google_compute_disk.worker_portworx.*.self_link, count.index)}"
   }
 
 
   network_interface {
-    subnetwork = "${google_compute_subnetwork.private.name}"
+    subnetwork = "${google_compute_subnetwork.vpc-private.name}"
   }
   metadata = {
     sshKeys = "centos:${file(var.bastion_key_path)}"
