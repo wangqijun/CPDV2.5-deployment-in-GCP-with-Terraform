@@ -379,7 +379,7 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
 
       ansible-playbook -i ../inventory-nfs-crio install-docker.yml
      
-   10 Configure docker storage in each node(Optional, only required for NFS):  
+   10 Configure docker storage in each node(Optional, only required for NFS and root partition size less than 300G and there is another raw disk for docker storage):  
 
       ansible-playbook -i ../inventory-nfs-crio docker_storage.yml
       
