@@ -375,11 +375,11 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
 
      ansible-playbook -i ../inventory-nfs-crio install-ansible.yml 
 
-   9 Install docker in each node:
+   9 Install docker in each node (Optional, only required for NFS):
 
       ansible-playbook -i ../inventory-nfs-crio install-docker.yml
      
-   10 Configure docker storage in each node:  
+   10 Configure docker storage in each node(Optional, only required for NFS):  
 
       ansible-playbook -i ../inventory-nfs-crio docker_storage.yml
       
@@ -390,6 +390,11 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
    12 Check the status of Network Manager by:
    
       ansible-playbook -i ../inventory-nfs-crio check-NetworkManager.yaml
+      
+   13 install podman (Optional, only required for Portworx): 
+   
+      ansible-playbook -i ../inventory-nfs-crio podman.yaml
+      
       
  ## Prerequisites check and kick off the deployment. 
  
