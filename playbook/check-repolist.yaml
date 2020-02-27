@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+   - name: report the repolist
+     shell: sudo yum repolist
+     register: output
+   - debug: var=output.stdout_lines
