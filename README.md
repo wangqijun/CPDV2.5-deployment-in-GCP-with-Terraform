@@ -471,5 +471,112 @@ round-trip min/avg/max/stddev = 38.261/41.210/42.819/2.088 ms
    
      sudo oc login -u system:admin
      sudo oc adm policy add-cluster-role-to-user cluster-admin ocadmin
+     sudo oc login with ocadmin
      sudo oc get no
      sudo oc get po --all-namespaces
+
+## Create NFS storage class for Cloud Pak For Data deployment (optional, only required for NFS deployment)
+
+
+   1  Copy the "nfs" folder to bastion node or master01 node (make you can run oc command)
+   
+   2  Go the nfs folder and edit the NFS_SERVER and NFS_PATH, and also the "server" and "path" in the volume section if needed.
+   
+   3  Run the nfs-setup.sh.
+   
+   4  Run "oc get sc" to double check the nfs storage class has been created:
+   
+   ```
+   [root@master01 ~]# oc get sc
+    NAME                      PROVISIONER                     AGE
+    nfs-client                icpd-nfs.io/nfs                 7m
+    
+   ```
+   
+ ## Install Portworx (optional, only required for Portworx deployment)
+ 
+ 
+   1 Download Cloud Pak For Data installer from IBM Passport Advantages:
+   
+      CP4D_EE_Installer_V2.5.bin
+      
+   2 Copy it bastion node or master01 node and run it.
+     
+     
+      chmod +x CP4D_EE_Installer_V2.5.bin
+      ./CP4D_EE_Installer_V2.5.bin
+   
+   3 Go to "cpd" folder and untar the file "cloudpak4data-ee-v2.5.0.0.tgz:
+   
+       tar xvf cloudpak4data-ee-v2.5.0.0.tgz
+   
+   4 Untar the file "cpd-portworx.tgz"
+    
+       tar xvf cpd-portworx.tgz
+       
+   5 Go to folder "cpd-portworx" and run following commands one by one:
+   
+   
+      bin/px-images.sh -d /tmp/cpd-px-images download
+      bin/px-util initialize --sshKeyFile /root/.ssh/id_rsa
+      bin/px-images.sh -e 'ssh -o StrictHostKeyChecking=no -l root' -d /tmp/cpd-px-images load
+      bin/px-install.sh -pp Never install
+      
+   6 Check the installation status:
+   
+      oc get po --all-namespaces -o wide | grep portworx
+      PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0].metadata.name}')
+      kubectl exec $PX_POD -n kube-system -- /opt/pwx/bin/pxctl status
+      
+   7 Create Portworx Storage classes:
+   
+      ./bin/px-sc.sh
+      
+   8 Check created storage classes:
+   
+```
+[root@master01 ~]# oc get sc
+NAME                      PROVISIONER                     AGE
+nfs-client                icpd-nfs.io/nfs                 7m
+portworx-cassandra-sc     kubernetes.io/portworx-volume   5h
+portworx-couchdb-sc       kubernetes.io/portworx-volume   5h
+portworx-db-gp            kubernetes.io/portworx-volume   5h
+portworx-db-gp3           kubernetes.io/portworx-volume   5h
+portworx-db2-sc           kubernetes.io/portworx-volume   5h
+portworx-elastic-sc       kubernetes.io/portworx-volume   5h
+portworx-kafka-sc         kubernetes.io/portworx-volume   5h
+portworx-metastoredb-sc   kubernetes.io/portworx-volume   5h
+portworx-nonshared-gp     kubernetes.io/portworx-volume   5h
+portworx-nonshared-gp2    kubernetes.io/portworx-volume   5h
+portworx-nonshared-gp3    kubernetes.io/portworx-volume   5h
+portworx-shared-gp        kubernetes.io/portworx-volume   5h
+portworx-shared-gp2       kubernetes.io/portworx-volume   5h
+portworx-shared-gp3       kubernetes.io/portworx-volume   5h
+portworx-shared-sc        kubernetes.io/portworx-volume   5h
+portworx-solr-sc          kubernetes.io/portworx-volume   5h
+stork-snapshot-sc         stork-snapshot                  6h
+[root@master01 ~]# 
+```
+
+
+ ## Install Cloud Pak For Data lite assembly
+ 
+ 1 Create new project "zen":
+ 
+    oc new-project zen
+    
+ 2 Update the api key in repo.yaml file.
+ 
+ 3 Create cp-override.yaml accoding to this link:
+ 
+   https://www.ibm.com/support/knowledgecenter/SSQNUZ_2.5.0/cpd/install/portworx-override-files.html
+   
+ 4 Run following adm command:
+ 
+    ./cpd-linux adm --repo ../repo.yaml --assembly lite --namespace zen --apply
+    
+ 5 Start the installation by:
+ 
+    ./cpd-linux --repo ../repo.yaml --assembly lite --verbose -o ../cp-override.yaml --target-registry-password $(oc whoami -t) --target-registry-username $(oc whoami) -c portworx-shared-gp3 --insecure-skip-tls-verify --transfer-image-to docker-registry.default.svc:5000/zen -n zen
+ 
+
