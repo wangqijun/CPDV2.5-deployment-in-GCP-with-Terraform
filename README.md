@@ -580,3 +580,14 @@ stork-snapshot-sc         stork-snapshot                  6h
     ./cpd-linux --repo ../repo.yaml --assembly lite --verbose -o ../cp-override.yaml --target-registry-password $(oc whoami -t) --target-registry-username $(oc whoami) -c portworx-shared-gp3 --insecure-skip-tls-verify --transfer-image-to docker-registry.default.svc:5000/zen -n zen
  
 
+ ## Install Watson Studio assembly
+ 
+   1 Create ws-override.yaml
+   
+   2 Run following adm command:
+ 
+    ./cpd-linux adm --repo ../repo.yaml --assembly wsl --namespace zen --apply
+   
+   3 Start the installation by:
+   
+     ./cpd-linux --repo ../repo.yaml --assembly wsl --verbose -o ../ws-override.yaml --target-registry-password $(oc whoami -t) --target-registry-username $(oc whoami) -c portworx-shared-gp --insecure-skip-tls-verify --transfer-image-to docker-registry.default.svc:5000/zen -n zen
