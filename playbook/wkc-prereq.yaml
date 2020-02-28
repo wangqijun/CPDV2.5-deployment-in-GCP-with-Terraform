@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: 0022-wkc-base-prereqs module requirement
+    shell: sudo echo "kernel.sem = 250 1024000 32 4096" >> /etc/sysctl.conf ; sysctl -p
+    register: output
+  - name: 0022-wkc-base-prereqs module requirement-part2
+    shell: sudo echo "vm.max_map_count=262144" >> /etc/sysctl.conf ; sysctl -p
+    register: output
