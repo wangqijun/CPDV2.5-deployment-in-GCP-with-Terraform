@@ -579,6 +579,9 @@ stork-snapshot-sc         stork-snapshot                  6h
  
     ./cpd-linux --repo ../repo.yaml --assembly lite --verbose -o ../cp-override.yaml --target-registry-password $(oc whoami -t) --target-registry-username $(oc whoami) -c portworx-shared-gp3 --insecure-skip-tls-verify --transfer-image-to docker-registry.default.svc:5000/zen -n zen
  
+ 6 Log in to CPD web console:
+ 
+  ![CPD web console](./img/cpd.jpg?raw=true)
 
  ## Install Watson Studio assembly
  
