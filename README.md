@@ -1,4 +1,4 @@
-# OCP-deployment-in-GCP-with-Terraform
+# CPDV2.5-deployment-in-GCP-with-Terraform
 
 This documentation will walk throught the steps to deploy an OCP instance from scratch in Google Cloud Platform, from provisioning the vms, system prerequisites, all the way to OCP installation.
 
