@@ -585,7 +585,10 @@ stork-snapshot-sc         stork-snapshot                  6h
 
  ## Install Watson Studio assembly
  
-   1 Create ws-override.yaml
+   1 Create ws-override.yaml accoding to this link:
+ 
+   https://www.ibm.com/support/knowledgecenter/SSQNUZ_2.5.0/cpd/install/portworx-override-files.html
+   
    
    2 Run following adm command:
  
