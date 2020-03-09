@@ -123,8 +123,13 @@ https://techbloc.net/archives/3681
     sudo systemctl start rpcbind
     sudo systemctl start nfs-server
     sudo chmod -R 755 /nfs
-    sudo firewall-cmd --permanent --zone=public --add-service=nfs
+    
+    Make sure firewalld service is running in nfs node and then run:
+    
+    sudo firewall-cmd --permanent --add-service=nfs
+    sudo firewall-cmd --permanent --add-service=mountd
     sudo firewall-cmd --permanent --add-service=rpc-bind
+    sudo firewall-cmd --reload
 
   4 Configure NFS experts file.
   
@@ -350,6 +355,9 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
    2 Install subscription-manager in each node:
    
       ansible-playbook -i ../inventory-nfs-crio install-subscription-manager.yml 
+      
+      (you mayn need to run:  sudo pip install --upgrade setuptools if you meet such error "ERROR! Unexpected Exception, this is probably a bug: name 'platform_system' is not defined")
+      
 
    3 Register each node with Redhat account. Make sure you have Redhat subscription account before this step:
 
@@ -394,6 +402,8 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
    13 install podman (Optional, only required for Portworx): 
    
       ansible-playbook -i ../inventory-nfs-crio podman.yaml
+      
+    
       
       
  ## Prerequisites check and kick off the deployment. 
