@@ -124,7 +124,11 @@ https://techbloc.net/archives/3681
     sudo systemctl start nfs-server
     sudo chmod -R 755 /nfs
     
-    Make sure firewalld service is running in nfs node and then run:
+    Make sure firewalld service is running in nfs node (if it's not installed, run: 
+    
+    sudo yum install firewalld
+    sudo systemctl enable firewalld
+    sudo systemctl start firewalld) and then run:
     
     sudo firewall-cmd --permanent --add-service=nfs
     sudo firewall-cmd --permanent --add-service=mountd
