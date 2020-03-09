@@ -393,6 +393,8 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
       
    11 Check the statue of clock syncronization in each node by:
    
+     (make sure ntp service is installed, otherwise run: " ansible-playbook -i ../inventory-nfs-crio ntp-install.yaml"):
+   
       ansible-playbook -i ../inventory-nfs-crio check-clock.yaml
       
    12 Check the status of Network Manager by:
