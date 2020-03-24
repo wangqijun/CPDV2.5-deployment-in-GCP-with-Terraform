@@ -1,0 +1,7 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+   - name: set kernel sem
+     shell: sysctl -w kernel.sem = 250 1024000 32 4096; echo "kernel.sem = 250 1024000 32 4096" >> /etc/sysctl.conf
