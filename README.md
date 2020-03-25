@@ -409,8 +409,9 @@ nfs01.us-east1-b.c.cp4d-h-pilot.internal openshift_ip=10.0.1.3
    
       ansible-playbook -i ../inventory-nfs-crio podman.yaml
       
-    
-      
+   14 Run following command to set the ip forward to 1:
+   
+      ansible-playbook -i ../inventory-nfs-crio ipforward.yml
       
  ## Prerequisites check and kick off the deployment. 
  
