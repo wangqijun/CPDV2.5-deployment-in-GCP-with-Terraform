@@ -1,0 +1,83 @@
+# define openshift components
+[OSEv3:children]
+masters
+nodes
+nfs
+etcd
+lb
+
+# define openshift variables
+[OSEv3:vars]
+containerized=true
+openshift_deployment_type=openshift-enterprise
+openshift_hosted_registry_storage_volume_size=50Gi
+openshift_docker_insecure_registries="172.30.0.0/16"
+openshift_disable_check=docker_storage,docker_image_availability,package_version
+oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+openshift_master_htpasswd_users={'ocadmin': '$apr1$CdyzN7vS$wM6gchgqURLe1A7gQRbIi0'}
+ansible_ssh_user=ec2-user
+ansible_become=true
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_service_broker_install=False
+
+#openshift_release=v3.11
+#openshift_image_tag=v3.11.146
+
+os_firewall_use_firewalld=True
+
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=ec2-18-191-144-25.us-east-2.compute.amazonaws.com
+openshift_master_cluster_public_hostname=ec2-18-191-144-25.us-east-2.compute.amazonaws.com
+#osm_cluster_network_cidr=172.16.0.0/16
+#openshift_public_hostname=master01.us-east1-b.c.cp4d-h-pilot.internal
+openshift_master_default_subdomain=apps.ec2-18-191-144-25.us-east-2.compute.amazonaws.com
+openshift_master_api_port=8443
+openshift_master_console_port=8443
+
+# CRI-O
+openshift_use_crio=True
+openshift_use_crio_only=True
+
+# NFS Host Group
+# An NFS volume will be created with path "nfs_directory/volume_name"
+# on the host within the [nfs] host group.  For example, the volume
+# path using these options would be "/exports/registry".  "exports" is
+# is the name of the export served by the nfs server.  "registry" is
+# the name of a directory inside of "/exports".
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+# nfs_directory must conform to DNS-1123 subdomain must consist of lower case
+# alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+openshift_hosted_registry_storage_nfs_directory=/nfs
+openshift_hosted_registry_storage_nfs_options='*(rw,no_root_squash,anonuid=1000,anongid=2000)'
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=200Gi
+
+
+[masters]
+ip-10-0-1-5.us-east-2.compute.internal openshift_ip=10.0.1.5 openshift_schedulable=true
+ip-10-0-1-21.us-east-2.compute.internal openshift_ip=10.0.1.21 openshift_schedulable=true
+ip-10-0-1-182.us-east-2.compute.internal openshift_ip=10.0.1.182 openshift_schedulable=true
+
+[etcd]
+ip-10-0-1-5.us-east-2.compute.internal openshift_ip=10.0.1.5
+ip-10-0-1-21.us-east-2.compute.internal openshift_ip=10.0.1.21
+ip-10-0-1-182.us-east-2.compute.internal openshift_ip=10.0.1.182
+
+[nodes]
+ip-10-0-1-5.us-east-2.compute.internal openshift_ip=10.0.1.5 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
+ip-10-0-1-21.us-east-2.compute.internal openshift_ip=10.0.1.21 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
+ip-10-0-1-182.us-east-2.compute.internal openshift_ip=10.0.1.182 openshift_schedulable=true openshift_node_group_name='node-config-master-infra-crio'
+ip-10-0-1-233.us-east-2.compute.internal openshift_ip=10.0.1.233 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
+ip-10-0-1-227.us-east-2.compute.internal openshift_ip=10.0.1.227 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
+ip-10-0-1-23.us-east-2.compute.internal openshift_ip=10.0.1.23 openshift_schedulable=true openshift_node_group_name='node-config-compute-crio'
+ip-10-0-0-174.us-east-2.compute.internal  openshift_ip=10.0.0.174 openshift_node_group_name="node-config-infra"
+
+# nfs server
+[nfs]
+ip-10-0-1-180.us-east-2.compute.internal openshift_ip=10.0.1.180
+
+[lb]
+ip-10-0-0-174.us-east-2.compute.internal  openshift_ip=10.0.0.174
+
