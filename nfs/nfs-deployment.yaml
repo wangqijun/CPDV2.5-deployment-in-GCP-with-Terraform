@@ -4,11 +4,14 @@ metadata:
   name: nfs-client-provisioner
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: nfs-client-provisioner
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner
   strategy:
     type: Recreate
   template:
@@ -27,12 +30,12 @@ spec:
             - name: PROVISIONER_NAME
               value: icpd-nfs.io/nfs
             - name: NFS_SERVER
-              value: nfs01
+              value: 10.57.230.249
             - name: NFS_PATH
-              value: /nfs
+              value: /data
       volumes:
         - name: nfs-client-root
           nfs:
-            server: nfs01
-            path: /nfs
+            server: 10.57.230.249
+            path: /data
 
